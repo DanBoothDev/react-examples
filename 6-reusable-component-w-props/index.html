@@ -10,7 +10,7 @@
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="container"></div>
         <script type="text/babel">
             const Liquid = React.createClass({
                 getInitialState: function() {
@@ -52,12 +52,26 @@
                 }
             })
 
+            const water = {
+                name: 'Water',
+                freezing: 0,
+                boiling: 100
+            }
+            // create an element dedicated to water
+            let waterEl = document.createElement('div')
+            // add elemenet to current div
+            document.getElementById('container').appendChild(waterEl);
+            // Render our liquid item
+            ReactDOM.render(<Liquid config={water} />, waterEl);
+            
             const ethanol = {
                 name: 'Ethanol',
                 freezing: -144.1,
                 boiling: 78.37
             }
-            ReactDOM.render(<Liquid config={ethanol} />, document.getElementById('app'))
+            let ethanolEl = document.createElement('div');
+            document.getElementById('container').appendChild(ethanolEl);
+            ReactDOM.render(<Liquid config={ethanol} />, ethanolEl);
         </script>
     </body>
 </html>
