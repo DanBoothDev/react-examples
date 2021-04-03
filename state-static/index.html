@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="https://fb.me/react-15.2.0.js"></script>
+        <script src="https://fb.me/react-dom-15.2.0.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/babel">
+            const Water = React.createClass({
+                getInitialState: function() {
+                    return {
+                        currentTemp: 50
+                    }
+                },
+                render: function() {
+                    // empty var to handle state
+                    let matterState;
+                    
+                    // if below freezing, it's solid
+                    if (this.state.currentTemp <= 0) {
+                        matterState = 'Solid';
+
+                    // if above boiling, it's gas
+                    } else if (this.state.currentTemp >= 100) {
+                        matterState = 'Gas';
+                    
+                    // otherwise it's just a liquid
+                    } else {
+                        matterState = 'Liquid';
+                    }
+                    
+                    return (
+                        <div>
+                            <p>At {this.state.currentTemp}°C, water is considered to be in a "{matterState}" state</p>
+                        </div>
+                    )
+                }
+            })
+
+            ReactDOM.render(<Water />, document.getElementById('app'))
+        </script>
+    </body>
+</html>
