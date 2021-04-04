@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="https://fb.me/react-15.2.0.js"></script>
+        <script src="https://fb.me/react-dom-15.2.0.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="container"></div>
+        <script type="text/babel">
+            const Liquid = React.createClass({
+                getDefaultProps: function() {
+                    return {
+                        config: {
+                            name: '-',
+                            freezing: 0,
+                            boiling: 100
+                        }
+                    }
+                },
+                getInitialState: function() {
+                    return {
+                        currentTemp: 50
+                    }
+                },
+                setTemp: function(event) {
+                    this.setState({currentTemp: event.target.value});
+                },
+                render: function() {
+                    // empty var to handle state
+                    let matterState;
+                    
+                    // if below freezing, it's solid
+                    if (this.state.currentTemp <= this.props.config.freezing) {
+                        matterState = 'Solid';
+
+                    // if above boiling, it's gas
+                    } else if (this.state.currentTemp >= this.props.config.boiling) {
+                        matterState = 'Gas';
+                    
+                    // otherwise it's just a liquid
+                    } else {
+                        matterState = 'Liquid';
+                    }
+
+                    const inputEl = <input type="text" onChange={this.setTemp} value={this.state.currentTemp} />;
+                    return (
+                        <div>
+                            {inputEl}
+                            <p>At {this.state.currentTemp}°C, {this.props.config.name} is considered to be in a "{matterState}" state</p>
+                        </div>
+                    )
+                }
+            });
+
+            const LiquidList = React.createClass({
+                render: function() {
+                    let liquids = this.props.liquids.map(function(liquidObj, index){
+                        return <Liquid config={liquidObj} key={index} />;
+                    });
+                    return (
+                        <div>
+                            { liquids }
+                        </div>
+                    )
+                }
+            })
+
+            const water = {
+                name: 'Water',
+                freezing: 0,
+                boiling: 100
+            }
+            const ethanol = {
+                name: 'Ethanol',
+                freezing: -144.1,
+                boiling: 78.37
+            }
+            ReactDOM.render(<LiquidList liquids={[water, ethanol]} />, document.getElementById('container'));
+        </script>
+    </body>
+</html>
